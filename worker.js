@@ -3,7 +3,7 @@
         const url = new URL(request.url);
 
         if (url.pathname === "/" || url.pathname === "/index.html") {
-          return fetch("https://prabowohengky.github.io/goflie-admin/");
+          return fetch("https://tonghann65.github.io/prolite/");
         }
 
         if (url.pathname === "/api/list") {
