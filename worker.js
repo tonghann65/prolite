@@ -44,10 +44,9 @@ export default {
       return Response.json({ success: true });
     }
 
-    // 5. Short Link Redirection & Bot Preview Handler (D1 Database)
+    // 5. Short Link Redirection & Twitter Player Card Handler
     const slug = path.slice(1);
     if (slug) {
-      // ទាញយកទិន្នន័យពី D1 Database តាមរយៈ Slug
       const link = await env.DB.prepare(
         "SELECT * FROM links WHERE slug = ?"
       ).bind(slug).first();
@@ -65,13 +64,16 @@ export default {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${link.title || "Preview"}</title>
+            <title>${link.title || "Video Player"}</title>
             
-            <!-- Twitter Summary Large Image Card Meta Tags -->
-            <meta name="twitter:card" content="summary_large_image">
+            <!-- Twitter Player Card Meta Tags with Play Button Support -->
+            <meta name="twitter:card" content="player">
             <meta name="twitter:title" content="${link.title || "Exclusive Video"}">
-            <meta name="twitter:description" content="Click to view">
+            <meta name="twitter:description" content="Click to play video">
             <meta name="twitter:image" content="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe">
+            <meta name="twitter:player" content="https://kadultvibes.vercel.app/player.html?video=${encodeURIComponent(link.original_url)}">
+            <meta name="twitter:player:width" content="1280">
+            <meta name="twitter:player:height" content="720">
         </head>
         <body></body>
         </html>`;
